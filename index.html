@@ -5466,30 +5466,26 @@ noteElements.forEach(el => {
         const tailProgressTime = headTime + length - currentTime;
         const inWindow = tailProgressTime <= (allowedRelease / 1000); 
 
-        const isPlayerHolding = isPlayerLane && 
-            (diff <= 0) && 
-            (tailProgressTime > 0) && 
-            (
-                inWindow ||
-                _heldKeys.has(arrowKeys[lane]) || 
-                _heldKeys.has(letterKeys[lane])
-            );
-        
-        const isOpponentSection = !isPlayerLane && (diff <= 0) && (tailProgressTime > 0);
+        const if (isPlayerHolding || isOpponentSection) {
+            const centerTimeOffset = 75 / speed; 
+            const adjustedDiff = diff + (centerTimeOffset / 1000); 
 
-        if (isPlayerHolding || isOpponentSection) {
-            const timePassed = Math.abs(diff);
-            const clipAmount = timePassed * speed;
-
-            if (clipAmount > 0 && clipAmount < height) {
-                el.style.clipPath = `inset(${clipAmount}px 0px 0px 0px)`;
-                if (isPlayerHolding && !hpDraining) {
-                    hp = Math.min(200, hp + 0.3); 
-                }
-            } else if (clipAmount >= height) {
-                el.style.clipPath = `inset(100% 0px 0px 0px)`;
-            } else {
+            if (adjustedDiff > 0) {
                 el.style.clipPath = "none";
+            } else {
+                const timePassed = Math.abs(adjustedDiff);
+                const clipAmount = timePassed * speed;
+
+                if (clipAmount > 0 && clipAmount < height) {
+                    el.style.clipPath = `inset(${clipAmount}px 0px 0px 0px)`;
+                    if (isPlayerHolding && !hpDraining) {
+                        hp = Math.min(200, hp + 0.3); 
+                    }
+                } else if (clipAmount >= height) {
+                    el.style.clipPath = `inset(100% 0px 0px 0px)`;
+                } else {
+                    el.style.clipPath = "none";
+                }
             }
 
             const trackingKey = `${lane}-${noteTarget}`;
@@ -5631,14 +5627,20 @@ noteElements.forEach(el => {
         
         const isOpponentSection = !isPlayerLane && (diff <= 0) && (tailProgressTime > 0);
 
-        if (isPlayerHolding || isOpponentSection) {
-            const timePassed = Math.abs(diff + (length / 1000) - (endHeight / speed / 1000));
-            let clipAmount = 50 - currentTop;
-            
-            if (clipAmount > 0) {
-                el.style.clipPath = `inset(${clipAmount}px 0px 0px 0px)`;
-            } else {
+                if (isPlayerHolding || isOpponentSection) {
+            const centerTimeOffset = 75 / speed; 
+            const adjustedDiff = diff + (centerTimeOffset / 1000); 
+
+            if (adjustedDiff > 0) {
                 el.style.clipPath = "none";
+            } else {
+                let clipAmount = 125 - currentTop;
+                
+                if (clipAmount > 0) {
+                    el.style.clipPath = `inset(${clipAmount}px 0px 0px 0px)`;
+                } else {
+                    el.style.clipPath = "none";
+                }
             }
 
             if (holdEnd) {
