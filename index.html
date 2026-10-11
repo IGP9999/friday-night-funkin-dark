@@ -2865,17 +2865,24 @@ function playSongPreview(songId) {
 }
     
 let inventory = new Map();
+let gameFlags = {};
 
-inventory.set("guns", 2);
-inventory.set("ammo", 1);
-inventory.set("weed", 0);
-inventory.set("microphone", 0);
+async function addRandomData() {
+    try {
+        const inventoryResponse = await fetch('data/inventory.json');
+        const inventoryData = await inventoryResponse.json();
+        inventory = new Map(Object.entries(inventoryData));
 
-    
-    let gameFlags = {
-        keithhasgun: false,
-        metlilith: false
-    };
+        const flagsResponse = await fetch('data/flags.json');
+        const flagsData = await flagsResponse.json();
+        gameFlags = flagsData;
+
+    } catch (error) {
+        console.error("Error:", error);
+    }
+}
+
+addRandomData();
 
     let meters = {
     stamina: 100,
