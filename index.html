@@ -5421,96 +5421,90 @@ noteElements.forEach(el => {
     activePlayerSustains.clear();
     activeOpponentSustains.clear();
     
-    const arrowKeys = ["ARROWLEFT", "ARROWDOWN", "ARROWUP", "ARROWRIGHT"];
-    const letterKeys = ["D", "F", "J", "K"];
-    
     const bodies = document.querySelectorAll(".sustain-body");
+    
     bodies.forEach(el => {
-        const headTime = parseFloat(el.dataset.time);
-        const length = parseFloat(el.dataset.length);
-        const diff = headTime - currentTime;
-        const lane = parseInt(el.dataset.lane);
-        const noteTarget = parseInt(el.dataset.target) || 0; 
-        const isPlayerLane = el.parentElement.id === "player-lanes";
+            const headTime = parseFloat(el.dataset.time);
+            const length = parseFloat(el.dataset.length);
+            const diff = headTime - currentTime;
+            const lane = parseInt(el.dataset.lane);
+            const noteTarget = parseInt(el.dataset.target) || 0; 
+            const isPlayerLane = el.parentElement.id === "player-lanes";
 
-        const headY = 50 + (diff * speed);
-        const endHeight = 135;
-        const height = Math.max(0, (length * speed) - endHeight);
+            const headY = 50 + (diff * speed);
+            const endHeight = 135;
+            const height = Math.max(0, (length * speed) - endHeight);
 
-        el.style.top = headY + "px";
-        el.style.height = height + "px";
+            el.style.top = headY + "px";
+            el.style.height = height + "px";
 
-        const tailProgressTime = headTime + length - currentTime;
-        const inWindow = tailProgressTime <= (allowedRelease / 1000); 
+            const tailProgressTime = headTime + length - currentTime;
 
-        const isPlayerHolding = isPlayerLane && 
-            (diff <= 0) && 
-            (tailProgressTime > 0) && 
-            (
-                inWindow ||
-                _heldKeys.has(arrowKeys[lane]) || 
-                _heldKeys.has(letterKeys[lane])
-            );
-        
-        const isOpponentSection = !isPlayerLane && (diff <= 0) && (tailProgressTime > 0);
-        const centerTimeOffset = (75 / speed) / 1000;
+const inWindow = tailProgressTime <= (allowedRelease / 1000); 
 
-        if (isPlayerHolding || isOpponentSection) {
+const isPlayerHolding = isPlayerLane && 
+    (diff <= 0) && 
+    (tailProgressTime > 0) && 
+    (
+        inWindow ||
+        _heldKeys.has(getLane(lane).arrow) || 
+        _heldKeys.has(getLane(lane).letter)
+    );
             
-            const timePassed = Math.abs(diff) - centerTimeOffset;
-            let clip = timePassed * speed; 
-            let clipAmount = clip - 60;
+            const isOpponentSection = !isPlayerLane && (diff <= 0) && (tailProgressTime > 0);
 
-            if (clipAmount > 0 && clipAmount < height) {
-                el.style.clipPath = `inset(${clipAmount}px 0px 0px 0px)`;
-                if (isPlayerHolding && !hpDraining) {
-                    hp = Math.min(200, hp + 0.3); 
+            if (isPlayerHolding || isOpponentSection) {
+                let visualTop = headY + 60;
+                let clipAmount = 50 - visualTop; 
+                
+                if (clipAmount > 0) {
+                    el.style.clipPath = `inset(${clipAmount}px 0px 0px 0px)`;
+                    if (isPlayerHolding && !hpDraining) {
+                        hp = Math.min(200, hp + 0.3); 
+                    }
+                } else {
+                    el.style.clipPath = "none";
                 }
-            } else if (clipAmount >= height || diff < -centerTimeOffset && clipAmount >= height) {
-                el.style.clipPath = `inset(100% 0px 0px 0px)`;
-            } else {
-                el.style.clipPath = "none";
+                const trackingKey = `${lane}-${noteTarget}`;
+                if (isPlayerLane) {
+                    activePlayerSustains.add(trackingKey);
+                } else {
+                    activeOpponentSustains.add(trackingKey);
+                }
+            } 
+            else if (isPlayerLane && diff < -150 && tailProgressTime > (allowedRelease / 1000)) {
+                misses++;
+                combo = 0;
+                playMiss();
+
+                const directionMap = ["miss-left", "miss-down", "miss-up", "miss-right"];
+                if (directionMap[lane]) {
+                    _playerMissAnimState = directionMap[lane];
+                    _playerAnimationTimer = 250; 
+                    _player2MissAnimState = directionMap[lane];
+                    _player2AnimationTimer = 250;
+                }
+
+                document.querySelectorAll(`#player-lanes [data-time="${headTime}"][data-lane="${lane}"]`).forEach(trail => {
+                    trail.remove();
+                });
+            }
+            else {
+                if (headY + height < 50) {
+                    el.style.clipPath = `inset(100% 0px 0px 0px)`;
+                } else {
+                    el.style.clipPath = "none";
+                }
             }
 
-            const trackingKey = `${lane}-${noteTarget}`;
-            if (isPlayerLane) {
-                activePlayerSustains.add(trackingKey);
-            } else {
-                activeOpponentSustains.add(trackingKey);
+            if (el.parentNode && (tailProgressTime <= -200 || headY + height < -50)) {
+                el.remove();
             }
-        } 
-        else if (isPlayerLane && diff < -150 && tailProgressTime > (allowedRelease / 1000)) {
-            misses++;
-            combo = 0;
-            playMiss();
-
-            const directionMap = ["miss-left", "miss-down", "miss-up", "miss-right"];
-            if (directionMap[lane]) {
-                _playerMissAnimState = directionMap[lane];
-                _playerAnimationTimer = 250; 
-                _player2MissAnimState = directionMap[lane];
-                _player2AnimationTimer = 250;
-            }
-
-            document.querySelectorAll(`#player-lanes [data-time="${headTime}"][data-lane="${lane}"]`).forEach(trail => {
-                trail.remove();
-            });
-        }
-        else {
-            const timePassed = Math.abs(diff)
-            let clipAmount = (timePassed * speed) - 60;
-            if (timePassed > 0 && clipAmount > 0) {
-                el.style.clipPath = `inset(${Math.min(height, clipAmount)}px 0px 0px 0px)`;
-            } else {
-                el.style.clipPath = "none";
-            }
-        }
-
-        if (el.parentNode && (tailProgressTime <= -200 || headY + height < -50)) {
-            el.remove();
-        }
     });
     
+    const arrowKeys = ["ARROWLEFT", "ARROWDOWN", "ARROWUP", "ARROWRIGHT"];
+    const letterKeys = ["D", "F", "J", "K"];
+
     const playerLanes = document.getElementById("player-lanes");
     if (playerLanes) {
         for (let lane = 0; lane < 4; lane++) {
@@ -5582,8 +5576,7 @@ noteElements.forEach(el => {
             }
         }
     }
-
-    const ends = document.querySelectorAll(".sustain-end");
+            const ends = document.querySelectorAll(".sustain-end");
     ends.forEach(el => {
         const headTime = parseFloat(el.dataset.time);
         const length = parseFloat(el.dataset.length);
@@ -5605,14 +5598,14 @@ noteElements.forEach(el => {
         const inWindow = tailProgressTime <= (allowedRelease / 1000);
         const isPlayerHolding = isPlayerLane && (
             inWindow || 
-            _heldKeys.has(arrowKeys[lane]) || 
-            _heldKeys.has(letterKeys[lane])
+            _heldKeys.has(getLane(lane).arrow) || 
+            _heldKeys.has(getLane(lane).letter)
         );
         
         const isOpponentSection = !isPlayerLane && (diff <= 0) && (tailProgressTime > 0);
 
         if (isPlayerHolding || isOpponentSection) {
-            let clipAmount = 125 - currentTop;
+            let clipAmount = 50 - currentTop;
             
             if (clipAmount > 0) {
                 el.style.clipPath = `inset(${clipAmount}px 0px 0px 0px)`;
@@ -5676,62 +5669,6 @@ noteElements.forEach(el => {
     }
 
     requestAnimationFrame(() => updateRhythmLoop(rSId));
-}
-
-function createNoteElement(n, isPlayer) {
-    const laneContainer = isPlayer
-        ? document.getElementById("player-lanes")
-        : document.getElementById("opponent-lanes");
-
-    const time = n[0];
-    const lane = n[1];
-    const length = n[2];
-    const type = n[3] || 0;
-    const target = n[4] || 0;
-
-    const note = document.createElement("div");
-    note.className = "note";
-    note.dataset.time = time;
-    note.dataset.length = length;
-    note.dataset.lane = lane;
-    note.dataset.type = type;
-    note.dataset.target = target;
-    note.style.left = (lane * 155) + "px";
-    //note.style.backgroundImage = `url('assets/final/notes/arrow_${lane}.png')`;
-    note.style.backgroundImage = `url('assets/final/notes/notestyles/arrow_${lane}.png')`;
-    laneContainer.appendChild(note);
-
-    if (type === 1) {
-        note.style.backgroundImage = `url('assets/final/notes/notestyles/arrow-poison.png')`;
-    }
-
-    if (length > 0) {
-
-        const body = document.createElement("div");
-
-        const offset = 75;
-        body.className = "sustain-body";
-        body.dataset.time = time;
-        body.dataset.length = length;
-        body.dataset.lane = lane;
-        body.dataset.type = type;
-        body.dataset.target = target;
-        body.style.left = (lane * 155) + "px";
-        body.style.transform = `translateY(${offset}px)`;
-        body.style.backgroundImage = `url('assets/final/notes/sustain-body_${lane}.png')`;
-        laneContainer.appendChild(body);
-
-        const end = document.createElement("div");
-        end.className = "sustain-end";
-        end.dataset.time = time;
-        end.dataset.length = length;
-        end.dataset.lane = lane;
-        end.dataset.type = type;
-        end.dataset.target = target;
-        end.style.left = (lane * 155) + "px";
-        end.style.backgroundImage = `url('assets/final/notes/sustain-end_${lane}.png')`;
-        laneContainer.appendChild(end);
-    }
 }
 
     function convertNumber(variableValue, targetHtmlId, folderPrefix) {
