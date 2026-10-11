@@ -5466,7 +5466,7 @@ noteElements.forEach(el => {
         const tailProgressTime = headTime + length - currentTime;
         const inWindow = tailProgressTime <= (allowedRelease / 1000); 
 
-        const if (isPlayerHolding || isOpponentSection) {
+        if (isPlayerHolding || isOpponentSection) {
             const centerTimeOffset = 75 / speed; 
             const adjustedDiff = diff + (centerTimeOffset / 1000); 
 
