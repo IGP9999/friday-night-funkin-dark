@@ -5456,7 +5456,7 @@ noteElements.forEach(el => {
         const noteTarget = parseInt(el.dataset.target) || 0; 
         const isPlayerLane = el.parentElement.id === "player-lanes";
 
-        const headY = 125 + (diff * speed);
+        const headY = 50 + (diff * speed);
         const endHeight = 135;
         const height = Math.max(0, (length * speed) - endHeight);
 
@@ -5478,16 +5478,19 @@ noteElements.forEach(el => {
         const isOpponentSection = !isPlayerLane && (diff <= 0) && (tailProgressTime > 0);
 
         if (isPlayerHolding || isOpponentSection) {
-            const timePassed = Math.abs(diff);
-            const clipAmount = timePassed * speed;
-
-            if (clipAmount > 0 && clipAmount < height) {
-                el.style.clipPath = `inset(${clipAmount}px 0px 0px 0px)`;
+            const targetLine = 125; 
+            let clipAmount = targetLine - headY;
+            
+            if (clipAmount > 0) {
+                if (clipAmount < height) {
+                    el.style.clipPath = `inset(${clipAmount}px 0px 0px 0px)`;
+                } else {
+                    el.style.clipPath = `inset(100% 0px 0px 0px)`;
+                }
+                
                 if (isPlayerHolding && !hpDraining) {
                     hp = Math.min(200, hp + 0.3); 
                 }
-            } else if (clipAmount >= height) {
-                el.style.clipPath = `inset(100% 0px 0px 0px)`;
             } else {
                 el.style.clipPath = "none";
             }
@@ -5498,7 +5501,6 @@ noteElements.forEach(el => {
             } else {
                 activeOpponentSustains.add(trackingKey);
             }
-        } 
         else if (isPlayerLane && diff < -150 && tailProgressTime > (allowedRelease / 1000)) {
             misses++;
             combo = 0;
