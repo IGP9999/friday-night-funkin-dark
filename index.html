@@ -79,10 +79,6 @@ a,
     src: url("fonts/GraffitiYouth-Regular.otf") format("truetype");
 }
     @font-face {
-    font-family: "Motley";
-    src: url("fonts/MotleyForcesRegular-w1rZ3.ttf") format("truetype");
-}
-    @font-face {
     font-family: "cwisdom";
     src: url("fonts/cwisdom.ttf") format("truetype");
 }
@@ -708,28 +704,9 @@ a,
     white-space: nowrap;
 }
 
-.scene-wrapper {
-    display: flex;
-    align-items: center;
-    width: max-content;
-    transition: transform 0.2s ease;
-    flex-shrink: 0;
-}
-
-.scene-wrapper.selected {
+.scene-item.selected {
     transform: translateX(130px);
 }
-
-.scene-item.selected {
-    transform: none;
-}
-.scene-icon {
-    margin-left: 100px;
-    height: 120px;
-    width: auto;
-    object-fit: contain;
-}
-    
     #freeplay-high-score {
     position: absolute;
     top: 55px;
@@ -1973,7 +1950,6 @@ const assets = [
     "assets/checkbox_check.png",
     "assets/checker.png",
     "assets/bg-box.png",
-    "assets/speaker-test.png",
     "assets/gear.png",
     "assets/play.png",
     "assets/play-hover.png",
@@ -2038,14 +2014,6 @@ const assets = [
     "assets/final/notes/arrow_1.png",
     "assets/final/notes/arrow_2.png",
     "assets/final/notes/arrow_3.png",
-    "assets/final/notes/sustain-body_0.png",
-    "assets/final/notes/sustain-body_1.png",
-    "assets/final/notes/sustain-body_2.png",
-    "assets/final/notes/sustain-body_3.png",
-    "assets/final/notes/sustain-end_0.png",
-    "assets/final/notes/sustain-end_1.png",
-    "assets/final/notes/sustain-end_2.png",
-    "assets/final/notes/sustain-end_3.png",
     "assets/final/notes/notestyles/arrow_0.png",
     "assets/final/notes/notestyles/arrow_1.png",
     "assets/final/notes/notestyles/arrow_2.png",
@@ -2642,21 +2610,101 @@ document.addEventListener('keydown', async (e) => {
     // might need to add some way to block meters/flags from incrementing, choices from showing up, and next transitions
     // should skip choices & close so im cautious abt adding break to choice triggers
     
-let freeplayData = [];
-
-async function addFreeplayData() {
-    try {
-        const response = await fetch('assets/freeplay/data.json');
-        const data = await response.json();
-
-        freeplayData = data;
-    } catch (error) {
-        console.error("Error: Could not read data.json configuration asset.", error);
+const freeplayData = [
+    {
+        chapterName: "Additional Content",
+        bg: "backgrounds/title.png",
+        chapterSrc: "assets/freeplay/additional.png",
+        scenes: [
+            { label: "This does nothing", file: "finaltest.json" },
+            { label: "Ill edit later", file: "test" }
+        ]
+    },
+    {
+        chapterName: "Week 1",
+        chapterSrc: "assets/freeplay/week-1.png",
+        scenes: [
+            { label: "Where 2 Go?", file: "test.json" },
+            { label: "To Get Coffee", file: "test.json" },
+            { label: "I Still Love U", file: "test.json" },
+            { label: "I Don't Like U", file: "test.json" }
+        ]
+    },
+    {
+        chapterName: "Week 2",
+        chapterSrc: "assets/freeplay/week-2.png",
+        scenes: [
+            { label: "Trois", file: "test.json" },
+            { label: "Quatre", file: "test.json" }
+        ]
+    },
+    {
+        chapterName: "Week 3",
+        chapterSrc: "assets/freeplay/week-3.png",
+        scenes: [
+            { label: "Trois", file: "test.json" },
+            { label: "Quatre", file: "test.json" }
+        ]
+    },
+    {
+        chapterName: "Week 4",
+        chapterSrc: "assets/freeplay/week-4.png",
+        scenes: [
+            { label: "Trois", file: "test.json" },
+            { label: "Quatre", file: "test.json" }
+        ]
+    },
+    {
+        chapterName: "Week 5",
+        chapterSrc: "assets/freeplay/week-5.png",
+        scenes: [
+            { label: "Trois", file: "test.json" },
+            { label: "Quatre", file: "test.json" }
+        ]
+    },
+    {
+        chapterName: "Week 6",
+        chapterSrc: "assets/freeplay/week-6.png",
+        scenes: [
+            { label: "Trois", file: "test.json" },
+            { label: "Quatre", file: "test.json" }
+        ]
+    },
+    {
+        chapterName: "Week 7",
+        chapterSrc: "assets/freeplay/week-7.png",
+        scenes: [
+            { label: "Trois", file: "test.json" },
+            { label: "Quatre", file: "test.json" }
+        ]
+    },
+    {
+        chapterName: "Week 8",
+        chapterSrc: "assets/freeplay/week-8.png",
+        scenes: [
+            { label: "Trois", file: "test.json" },
+            { label: "Quatre", file: "test.json" }
+        ]
+    },
+    {
+        chapterName: "Week 9",
+        chapterSrc: "assets/freeplay/week-9.png",
+        scenes: [
+            { label: "Trois", file: "test.json" },
+            { label: "Quatre", file: "test.json" }
+        ]
+    },
+    {
+        chapterName: "Songs",
+        bg: "backgrounds/FUNKY.png",
+        chapterSrc: "assets/freeplay/songs.png",
+        scenes: [
+            { label: "Stress", file: "song1" },
+            { label: "Stress", file: "song1" },
+            { label: "Quatre", file: "song2" }
+        ]
     }
-}
-
-addFreeplayData();
-
+];
 
 const highScoreRecord = JSON.parse(localStorage.getItem("fnf_dark_highscores")) || {};
     
@@ -2826,30 +2874,17 @@ function playSongPreview(songId) {
         if (scoreGraphic) scoreGraphic.style.display = "none";
     }
 
-        selectedChapter.scenes.forEach((sceneName, index) => {
-        const wrapper = document.createElement("div");
-        wrapper.className = "scene-wrapper";
-        
-        const scene = document.createElement("div");
-        scene.className = "scene-item";
-            
-        const textSpan = document.createElement("span");
-        textSpan.innerText = sceneName.label;
-        scene.appendChild(textSpan);
-        wrapper.appendChild(scene);
-
-        if (sceneName.icon) {
-            const iconImg = document.createElement("img");
-            iconImg.src = sceneName.icon;
-            iconImg.className = "scene-icon";
-            wrapper.appendChild(iconImg);
-        }
+    selectedChapter.scenes.forEach((sceneName, index) => {
+    const scene = document.createElement("div");
+    scene.innerHTML = `<span>${sceneName.label}</span>`; 
+    
+    scene.className = "scene-item";
 
         if (index === sceneIndex) {
-            wrapper.classList.add("selected");
+            scene.classList.add("selected");
             
             setTimeout(() => {
-                wrapper.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                scene.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }, 0);
             if (chapterIndex === 10) {
                 const savedScore = highScoreRecord[sceneName.file] || 0;
@@ -2864,29 +2899,22 @@ function playSongPreview(songId) {
             }
         }
         
-        sceneList.appendChild(wrapper);
+        sceneList.appendChild(scene);
     });
 }
     
 let inventory = new Map();
-let gameFlags = {};
 
-async function addRandomData() {
-    try {
-        const inventoryResponse = await fetch('data/inventory.json');
-        const inventoryData = await inventoryResponse.json();
-        inventory = new Map(Object.entries(inventoryData));
+inventory.set("guns", 2);
+inventory.set("ammo", 1);
+inventory.set("weed", 0);
+inventory.set("microphone", 0);
 
-        const flagsResponse = await fetch('data/flags.json');
-        const flagsData = await flagsResponse.json();
-        gameFlags = flagsData;
-
-    } catch (error) {
-        console.error("Error:", error);
-    }
-}
-
-addRandomData();
+    
+    let gameFlags = {
+        keithhasgun: false,
+        metlilith: false
+    };
 
     let meters = {
     stamina: 100,
@@ -4259,7 +4287,7 @@ window.addEventListener("keydown", (e) => {
     const notes = document.querySelectorAll("#player-lanes .note");
     let closestNote = null;
     let minDistance = Infinity;
-    let hitTimeDiff = 0;
+    let hitTiming = 0;
 
     notes.forEach(el => {
         const targetTime = parseFloat(el.dataset.time);
@@ -4271,11 +4299,11 @@ window.addEventListener("keydown", (e) => {
         if (lane === targetLane && distance < minDistance) {
             minDistance = distance;
             closestNote = el;
-            hitTimeDiff = timeDiff;
+            hitTiming = distance;
         }
     });
         
-    if (closestNote && hitTimeDiff <= timing.bad && hitTimeDiff >= -timing.shit) {
+    if (closestNote && hitTiming <= timing.bad) {
         
         validHit = true;
         _playerMissAnimState = null;
@@ -4308,9 +4336,7 @@ window.addEventListener("keydown", (e) => {
         closestNote.dataset.hit = "true";
         closestNote.remove();
 
-        const hitTiming = Math.abs(hitTimeDiff);
-
-        if (hitTiming <= timing.sick) { 
+        if (hitTiming <= timing.sick) {
             if (!hpDraining) {
                 hp = Math.min(maxHP, hp + 5); 
             }
@@ -4327,8 +4353,7 @@ window.addEventListener("keydown", (e) => {
                 startTime: currentTime,
                 el: null
             });
-        } 
-        else if (hitTiming <= timing.good) { 
+        } else if (hitTiming <= timing.good) {
             if (!hpDraining) {
                 hp = Math.min(maxHP, hp + 2); 
             }
@@ -4339,8 +4364,7 @@ window.addEventListener("keydown", (e) => {
             spawnCombo(combo);
             accuracy = calculateAccuracy(sicks, goods, bads, shits, misses);
             grade = calculateGrade(accuracy);
-        } 
-        else if (hitTiming <= timing.bad) { 
+        } else if (hitTiming <= timing.bad) {
             hp = Math.min(maxHP, hp + 0); 
             spawnRating("bad");
             bads++;
@@ -4349,8 +4373,7 @@ window.addEventListener("keydown", (e) => {
             spawnCombo(combo);
             accuracy = calculateAccuracy(sicks, goods, bads, shits, misses);
             grade = calculateGrade(accuracy);
-        } 
-        else { 
+        } else {
             hp = Math.min(maxHP, hp + 0); 
             spawnRating("shit");
             shits++;
@@ -4360,10 +4383,10 @@ window.addEventListener("keydown", (e) => {
             accuracy = calculateAccuracy(sicks, goods, bads, shits, misses);
             grade = calculateGrade(accuracy);
         }
-        
         updateHPBar(currentTime);
     }
 });
+
 
 window.addEventListener("keyup", (e) => {
     if (isPaused) return;
@@ -5235,7 +5258,7 @@ function resumeIntervals() {
 
 let activePlayerSustains = new Set();
 let activeOpponentSustains = new Set();
-const allowedRelease = 330;
+const allowedRelease = 120;
 
 function updateRhythmLoop(rSId) {
     
@@ -5669,6 +5692,62 @@ const isPlayerHolding = isPlayerLane &&
     }
 
     requestAnimationFrame(() => updateRhythmLoop(rSId));
+}
+
+function createNoteElement(n, isPlayer) {
+    const laneContainer = isPlayer
+        ? document.getElementById("player-lanes")
+        : document.getElementById("opponent-lanes");
+
+    const time = n[0];
+    const lane = n[1];
+    const length = n[2];
+    const type = n[3] || 0;
+    const target = n[4] || 0;
+
+    const note = document.createElement("div");
+    note.className = "note";
+    note.dataset.time = time;
+    note.dataset.length = length;
+    note.dataset.lane = lane;
+    note.dataset.type = type;
+    note.dataset.target = target;
+    note.style.left = (lane * 155) + "px";
+    //note.style.backgroundImage = `url('assets/final/notes/arrow_${lane}.png')`;
+    note.style.backgroundImage = `url('assets/final/notes/notestyles/arrow_${lane}.png')`;
+    laneContainer.appendChild(note);
+
+    if (type === 1) {
+        note.style.backgroundImage = `url('assets/final/notes/notestyles/arrow-poison.png')`;
+    }
+
+    if (length > 0) {
+
+        const body = document.createElement("div");
+
+        const offset = 75;
+        body.className = "sustain-body";
+        body.dataset.time = time;
+        body.dataset.length = length;
+        body.dataset.lane = lane;
+        body.dataset.type = type;
+        body.dataset.target = target;
+        body.style.left = (lane * 155) + "px";
+        body.style.transform = `translateY(${offset}px)`;
+        body.style.backgroundImage = `url('assets/final/notes/sustain-body_${lane}.png')`;
+        laneContainer.appendChild(body);
+
+        const end = document.createElement("div");
+        end.className = "sustain-end";
+        end.dataset.time = time;
+        end.dataset.length = length;
+        end.dataset.lane = lane;
+        end.dataset.type = type;
+        end.dataset.target = target;
+        end.style.left = (lane * 155) + "px";
+        end.style.backgroundImage = `url('assets/final/notes/sustain-end_${lane}.png')`;
+        laneContainer.appendChild(end);
+    }
 }
 
     function convertNumber(variableValue, targetHtmlId, folderPrefix) {
