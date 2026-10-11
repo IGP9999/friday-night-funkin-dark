@@ -5463,8 +5463,19 @@ noteElements.forEach(el => {
         el.style.top = headY + "px";
         el.style.height = height + "px";
 
-        const tailProgressTime = headTime + length - currentTime;
-        const inWindow = tailProgressTime <= (allowedRelease / 1000); 
+    const tailProgressTime = headTime + length - currentTime;
+    const inWindow = tailProgressTime <= (allowedRelease / 1000); 
+
+        const isPlayerHolding = isPlayerLane && 
+            (diff <= 0) && 
+            (tailProgressTime > 0) && 
+            (
+                inWindow ||
+                _heldKeys.has(arrowKeys[lane]) || 
+                _heldKeys.has(letterKeys[lane])
+            );
+        
+        const isOpponentSection = !isPlayerLane && (diff <= 0) && (tailProgressTime > 0);
 
         if (isPlayerHolding || isOpponentSection) {
             const centerTimeOffset = 75 / speed; 
