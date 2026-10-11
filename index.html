@@ -673,15 +673,6 @@ a,
     isolation: isolate; 
 }
 
-.scene-icon {
-    position: relative;
-    z-index: 3;
-    margin-left: 100px;
-    height: 70px;
-    width: auto;
-    object-fit: contain;
-}
-
 .scene-item::before {
     content: '';
     position: absolute;
@@ -713,9 +704,28 @@ a,
     white-space: nowrap;
 }
 
-.scene-item.selected {
+.scene-wrapper {
+    display: flex;
+    align-items: center;
+    width: max-content;
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+}
+
+.scene-wrapper.selected {
     transform: translateX(130px);
 }
+
+.scene-item.selected {
+    transform: none;
+}
+.scene-icon {
+    margin-left: 100px;
+    height: 70px;
+    width: auto;
+    object-fit: contain;
+}
+    
     #freeplay-high-score {
     position: absolute;
     top: 55px;
@@ -2813,25 +2823,29 @@ function playSongPreview(songId) {
     }
 
         selectedChapter.scenes.forEach((sceneName, index) => {
+        const wrapper = document.createElement("div");
+        wrapper.className = "scene-wrapper";
+        
         const scene = document.createElement("div");
         scene.className = "scene-item";
             
         const textSpan = document.createElement("span");
         textSpan.innerText = sceneName.label;
         scene.appendChild(textSpan);
+        wrapper.appendChild(scene);
 
         if (sceneName.icon) {
             const iconImg = document.createElement("img");
             iconImg.src = sceneName.icon;
             iconImg.className = "scene-icon";
-            scene.appendChild(iconImg);
+            wrapper.appendChild(iconImg);
         }
 
         if (index === sceneIndex) {
-            scene.classList.add("selected");
+            wrapper.classList.add("selected");
             
             setTimeout(() => {
-                scene.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                wrapper.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }, 0);
             if (chapterIndex === 10) {
                 const savedScore = highScoreRecord[sceneName.file] || 0;
@@ -2846,7 +2860,7 @@ function playSongPreview(songId) {
             }
         }
         
-        sceneList.appendChild(scene);
+        sceneList.appendChild(wrapper);
     });
 }
     
