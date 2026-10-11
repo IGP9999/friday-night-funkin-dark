@@ -673,6 +673,15 @@ a,
     isolation: isolate; 
 }
 
+.scene-icon {
+    position: relative;
+    z-index: 3;
+    margin-left: 100px;
+    height: 70px;
+    width: auto;
+    object-fit: contain;
+}
+
 .scene-item::before {
     content: '';
     position: absolute;
@@ -2708,7 +2717,7 @@ const freeplayData = [
         bg: "backgrounds/FUNKY.png",
         chapterSrc: "assets/freeplay/songs.png",
         scenes: [
-            { label: "Stress", file: "song1" },
+            { label: "Stress", file: "song1", icon: "assets/final/iconbf-neutral.png" },
             { label: "Stress", file: "song1" },
             { label: "Quatre", file: "song2" }
         ]
@@ -2883,11 +2892,20 @@ function playSongPreview(songId) {
         if (scoreGraphic) scoreGraphic.style.display = "none";
     }
 
-    selectedChapter.scenes.forEach((sceneName, index) => {
-    const scene = document.createElement("div");
-    scene.innerHTML = `<span>${sceneName.label}</span>`; 
-    
-    scene.className = "scene-item";
+        selectedChapter.scenes.forEach((sceneName, index) => {
+        const scene = document.createElement("div");
+        scene.className = "scene-item";
+            
+        const textSpan = document.createElement("span");
+        textSpan.innerText = sceneName.label;
+        scene.appendChild(textSpan);
+
+        if (sceneName.icon) {
+            const iconImg = document.createElement("img");
+            iconImg.src = sceneName.icon;
+            iconImg.className = "scene-icon";
+            scene.appendChild(iconImg);
+        }
 
         if (index === sceneIndex) {
             scene.classList.add("selected");
@@ -2910,7 +2928,6 @@ function playSongPreview(songId) {
         
         sceneList.appendChild(scene);
     });
-}
     
 let inventory = new Map();
 
