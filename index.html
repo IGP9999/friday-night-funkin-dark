@@ -5479,7 +5479,7 @@ noteElements.forEach(el => {
 
         if (isPlayerHolding || isOpponentSection) {
             const centerTimeOffset = 75 / speed; 
-            const adjustedDiff = diff + (centerTimeOffset / 1000); 
+            const adjustedDiff = diff - (centerTimeOffset / 1000); 
 
             if (adjustedDiff > 0) {
                 el.style.clipPath = "none";
@@ -5640,7 +5640,7 @@ noteElements.forEach(el => {
 
                 if (isPlayerHolding || isOpponentSection) {
             const centerTimeOffset = 75 / speed; 
-            const adjustedDiff = diff + (centerTimeOffset / 1000); 
+            const adjustedDiff = diff - (centerTimeOffset / 1000); 
 
             if (adjustedDiff > 0) {
                 el.style.clipPath = "none";
