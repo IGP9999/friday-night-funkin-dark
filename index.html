@@ -5479,8 +5479,10 @@ noteElements.forEach(el => {
         const centerTimeOffset = (75 / speed) / 1000;
 
         if (isPlayerHolding || isOpponentSection) {
+            
             const timePassed = Math.abs(diff) - centerTimeOffset;
-            const clipAmount = timePassed * speed;
+            let clip = timePassed * speed; 
+            let clipAmount = clip - 75;
 
             if (clipAmount > 0 && clipAmount < height) {
                 el.style.clipPath = `inset(${clipAmount}px 0px 0px 0px)`;
@@ -5518,8 +5520,8 @@ noteElements.forEach(el => {
             });
         }
         else {
-            const timePassed = Math.abs(diff) - centerTimeOffset;
-            const clipAmount = timePassed * speed;
+            const timePassed = Math.abs(diff)
+            let clipAmount = (timePassed * speed) - 75;
             if (timePassed > 0 && clipAmount > 0) {
                 el.style.clipPath = `inset(${Math.min(height, clipAmount)}px 0px 0px 0px)`;
             } else {
