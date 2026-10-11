@@ -2,6 +2,7 @@
   "id": "song1",
   "name": "Stress",
   "bpm": 178,
+  "difficulty": 5,
   "scrollSpeed": 1.7,
     "stageLayers": [
     { "id": "background", "type": "static", "src": "bg.png", "zIndex": 2 }
