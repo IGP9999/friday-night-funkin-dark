@@ -5476,9 +5476,10 @@ noteElements.forEach(el => {
             );
         
         const isOpponentSection = !isPlayerLane && (diff <= 0) && (tailProgressTime > 0);
+        const centerTimeOffset = (75 / speed) / 1000;
 
         if (isPlayerHolding || isOpponentSection) {
-            const timePassed = Math.abs(diff);
+            const timePassed = Math.abs(diff) - centerTimeOffset;
             const clipAmount = timePassed * speed;
 
             if (clipAmount > 0 && clipAmount < height) {
@@ -5486,7 +5487,7 @@ noteElements.forEach(el => {
                 if (isPlayerHolding && !hpDraining) {
                     hp = Math.min(200, hp + 0.3); 
                 }
-            } else if (clipAmount >= height) {
+            } else if (clipAmount >= height || diff < -centerTimeOffset && clipAmount >= height) {
                 el.style.clipPath = `inset(100% 0px 0px 0px)`;
             } else {
                 el.style.clipPath = "none";
@@ -5517,9 +5518,9 @@ noteElements.forEach(el => {
             });
         }
         else {
-            const timePassed = Math.abs(diff);
+            const timePassed = Math.abs(diff) - centerTimeOffset;
             const clipAmount = timePassed * speed;
-            if (diff < 0 && clipAmount > 0) {
+            if (timePassed > 0 && clipAmount > 0) {
                 el.style.clipPath = `inset(${Math.min(height, clipAmount)}px 0px 0px 0px)`;
             } else {
                 el.style.clipPath = "none";
@@ -5530,7 +5531,7 @@ noteElements.forEach(el => {
             el.remove();
         }
     });
-
+    
     const playerLanes = document.getElementById("player-lanes");
     if (playerLanes) {
         for (let lane = 0; lane < 4; lane++) {
@@ -5632,8 +5633,7 @@ noteElements.forEach(el => {
         const isOpponentSection = !isPlayerLane && (diff <= 0) && (tailProgressTime > 0);
 
         if (isPlayerHolding || isOpponentSection) {
-            const timePassed = Math.abs(diff + (length / 1000) - (endHeight / speed / 1000));
-            let clipAmount = 50 - currentTop;
+            let clipAmount = 125 - currentTop;
             
             if (clipAmount > 0) {
                 el.style.clipPath = `inset(${clipAmount}px 0px 0px 0px)`;
