@@ -5456,7 +5456,7 @@ noteElements.forEach(el => {
         const noteTarget = parseInt(el.dataset.target) || 0; 
         const isPlayerLane = el.parentElement.id === "player-lanes";
 
-        const headY = 50 + (diff * speed);
+        const headY = 125 + (diff * speed);
         const endHeight = 135;
         const height = Math.max(0, (length * speed) - endHeight);
 
@@ -5612,7 +5612,7 @@ noteElements.forEach(el => {
         const noteTarget = parseInt(el.dataset.target) || 0;
         const isPlayerLane = el.parentElement.id === "player-lanes";
 
-        const headY = 50 + (diff * speed);
+        const headY = 125 + (diff * speed);
         const height = length * speed;
         const endHeight = 60;
         
@@ -5633,7 +5633,7 @@ noteElements.forEach(el => {
 
         if (isPlayerHolding || isOpponentSection) {
             const timePassed = Math.abs(diff + (length / 1000) - (endHeight / speed / 1000));
-            let clipAmount = 50 - currentTop;
+            let clipAmount = 125 - currentTop;
             
             if (clipAmount > 0) {
                 el.style.clipPath = `inset(${clipAmount}px 0px 0px 0px)`;
