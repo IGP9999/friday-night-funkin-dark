@@ -5482,7 +5482,7 @@ noteElements.forEach(el => {
             
             const timePassed = Math.abs(diff) - centerTimeOffset;
             let clip = timePassed * speed; 
-            let clipAmount = clip - 75;
+            let clipAmount = clip - 60;
 
             if (clipAmount > 0 && clipAmount < height) {
                 el.style.clipPath = `inset(${clipAmount}px 0px 0px 0px)`;
@@ -5521,7 +5521,7 @@ noteElements.forEach(el => {
         }
         else {
             const timePassed = Math.abs(diff)
-            let clipAmount = (timePassed * speed) - 75;
+            let clipAmount = (timePassed * speed) - 60;
             if (timePassed > 0 && clipAmount > 0) {
                 el.style.clipPath = `inset(${Math.min(height, clipAmount)}px 0px 0px 0px)`;
             } else {
