@@ -4,15 +4,10 @@
   "scrollSpeed": 0.7,
   "player": "bf",
   "opponent": "opponent",
-  "instSrc": "Inst.mp3",
-  "voicePlayer": "Voices_pico.mp3",
-  "voiceOpponent": "Voices_opponent.mp3",
+  "instSrc": "BoxingMatchWgInst.mp3",
+  "voicePlayer": "VoicesWg1.mp3",
+  "voiceOpponent": "Voices_Wg2.mp3",
   "opponentNotes": [
-    [500, 0, 0],
-    [1000, 1, 0],
-    [1500, 2, 300],
-    [2500, 3, 0],
-    [3000, 1, 500]
   ],
   "playerNotes": [
     [750, 2, 0],
