@@ -2709,7 +2709,7 @@ function playSongPreview(songId) {
 
 
     document.addEventListener('keydown', async (e) => {
-  if (!inFreeplay || transition) return;
+  if (!inFreeplay || transition || _rhythmStarted) return;
 
   const selectedChapter = freeplayData[chapterIndex];
 
