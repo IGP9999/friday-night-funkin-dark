@@ -12,9 +12,9 @@
   "opponent": "gf",
   "speaker": "radio",
   "speakerPosition": { "x": 600, "y": 800 },
-  "instSrc": "Inst.mp3",
-  "voicePlayer": "Voices-bf.mp3",
-  "voiceOpponent": "Voices-tankman.mp3",
+  "instSrc": "TargetPracticeInst.mp3",
+  "voicePlayer": "Voices2.mp3",
+  "voiceOpponent": "Voices3.mp3",
   "opponentNotes": [
     [15673, 1, 0, 0],
     [15918, 2, 0, 0],
