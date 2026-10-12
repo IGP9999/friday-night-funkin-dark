@@ -1,21 +1,25 @@
 {
-  "id": "song1",
-  "name": "BoxingMatch-Wg",
-  "composer": "ur mom",
+  "id": "song2",
+  "name": "Boxing Match WG",
+  "composer": "person",
   "bpm": 200,
-  "difficulty": 5,
+  "difficulty": 0,
   "scrollSpeed": 1.7,
-    "stageLayers": [
+   "stageLayers": [
     { "id": "background", "type": "static", "src": "bg.png", "zIndex": 2 }
   ],
   "player": "bf",
   "opponent": "gf",
   "speaker": "radio",
-  "speakerPosition": { "x": 600, "y": 800 },
+  "speakerPosition": {
+    "x": 0,
+    "y": 0
+  },
   "instSrc": "BoxingMatchWgInst.mp3",
   "voicePlayer": "VoicesWg1.mp3",
   "voiceOpponent": "VoicesWg2.mp3",
   "opponentNotes": [
+    [366607, 2, 1681, 0]
   ],
   "playerNotes": [
     [6450, 3, 0, 0, 0],
@@ -4639,4 +4643,5 @@
     [366566, 2, 0, 0, 0],
     [366607, 0, 2583, 0, 0]
   ],
+  "events": []
 }
