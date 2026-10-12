@@ -1,9 +1,17 @@
 {
-  "background": "background.png",
-  "bpm": 200,
+  "id": "song1",
+  "name": "Stress",
+  "composer": "ur mom",
+  "bpm": 245,
+  "difficulty": 5,
   "scrollSpeed": 1.7,
+    "stageLayers": [
+    { "id": "background", "type": "static", "src": "bg.png", "zIndex": 2 }
+  ],
   "player": "bf",
-  "opponent": "opponent",
+  "opponent": "gf",
+  "speaker": "radio",
+  "speakerPosition": { "x": 600, "y": 800 },
   "instSrc": "BoxingMatchWgInst.mp3",
   "voicePlayer": "VoicesWg1.mp3",
   "voiceOpponent": "VoicesWg2.mp3",
