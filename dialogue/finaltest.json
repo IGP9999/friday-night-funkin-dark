@@ -3,6 +3,6 @@
     "style": "bf",
     "text": "oi lets go load this thang.",
     "triggers": [
-        { "type": "song", "value": "song2" }
+        { "type": "song", "value": "song3" }
     ]
 }
