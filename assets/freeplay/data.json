@@ -89,6 +89,7 @@
     "scenes": [
       { "label": "Stress", "file": "song2", "icon": "assets/final/iconbf-neutral.png" },
       { "label": "Stress", "file": "song1" },
+      { "label": "Ruckus", "file": "song3" },
       { "label": "Quatre", "file": "song2" }
     ]
   }
