@@ -1,7 +1,7 @@
 {
   "background": "background.png",
-  "bpm": 170,
-  "scrollSpeed": 0.7,
+  "bpm": 200,
+  "scrollSpeed": 1.7,
   "player": "bf",
   "opponent": "opponent",
   "instSrc": "BoxingMatchWgInst.mp3",
