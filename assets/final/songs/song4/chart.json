@@ -14,7 +14,7 @@
   "speakerPosition": { "x": 600, "y": 800 },
   "instSrc": "TargetPracticeWgInst.mp3",
   "voicePlayer": "TargetPracticeWgVoices1.mp3",
-  "voiceOpponent": "TragetPracticeWg2.mp3",
+  "voiceOpponent": "TargetPracticeWgVoices2.mp3",
   "opponentNotes": [
   ],
   "playerNotes": [
