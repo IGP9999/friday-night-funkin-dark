@@ -11,10 +11,7 @@
   "player": "bf",
   "opponent": "gf",
   "speaker": "radio",
-  "speakerPosition": {
-    "x": 0,
-    "y": 0
-  },
+  "speakerPosition": {"x": 0, "y": 0},
   "instSrc": "BoxingMatchWgInst.mp3",
   "voicePlayer": "VoicesWg1.mp3",
   "voiceOpponent": "VoicesWg2.mp3",
