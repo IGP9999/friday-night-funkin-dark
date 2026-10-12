@@ -87,7 +87,7 @@
     "bg": "backgrounds/FUNKY.png",
     "chapterSrc": "assets/freeplay/songs.png",
     "scenes": [
-      { "label": "Stress", "file": "song1", "icon": "assets/final/iconbf-neutral.png" },
+      { "label": "Stress", "file": "song2", "icon": "assets/final/iconbf-neutral.png" },
       { "label": "Stress", "file": "song1" },
       { "label": "Quatre", "file": "song2" }
     ]
