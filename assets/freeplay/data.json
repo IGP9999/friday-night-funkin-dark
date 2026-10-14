@@ -87,10 +87,10 @@
     "bg": "backgrounds/FUNKY.png",
     "chapterSrc": "assets/freeplay/songs.png",
     "scenes": [
-      { "label": "Stress", "file": "song2", "icon": "assets/final/iconbf-neutral.png" },
-      { "label": "Stress", "file": "song1" },
+      { "label": "Target-Practice", "file": "song1", "icon": "assets/final/iconbf-neutral.png" },
+      { "label": "Boxing-Match Wg", "file": "song2" },
       { "label": "Ruckus", "file": "song3" },
-      { "label": "Quatre", "file": "song2" }
+      { "label": "Target-Practice Wg", "file": "song4" }
     ]
   }
 ]
