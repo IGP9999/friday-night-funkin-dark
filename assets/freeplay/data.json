@@ -90,7 +90,8 @@
       { "label": "Target-Practice", "file": "song1", "icon": "assets/final/iconbf-neutral.png" },
       { "label": "Boxing-Match Wg", "file": "song2" },
       { "label": "Ruckus", "file": "song3" },
-      { "label": "Target-Practice Wg", "file": "song4" }
+      { "label": "Target-Practice Wg", "file": "song4" },
+      { "label": "Long-Awaited", "file": "song5" }
     ]
   }
 ]
