@@ -1,6 +1,6 @@
 {
-  "id": "song4",
-  "name": "TargetPracticeWg",
+  "id": "song5",
+  "name": "Long-Awaited",
   "composer": "ur mom",
   "bpm": 190,
   "difficulty": 8,
@@ -12,9 +12,9 @@
   "opponent": "gf",
   "speaker": "radio",
   "speakerPosition": { "x": 600, "y": 800 },
-  "instSrc": "TargetPracticeWgInst.mp3",
-  "voicePlayer": "TargetPracticeWgVoices1.mp3",
-  "voiceOpponent": "TargetPracticeWgVoices2.mp3",
+  "instSrc": "Long-AwaitedInst.mp3",
+  "voicePlayer": "Long-AwaitedVoices1.mp3",
+  "voiceOpponent": "Long-AwaitedVoices2.mp3",
   "opponentNotes": [
   ],
   "playerNotes": [
